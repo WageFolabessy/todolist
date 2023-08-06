@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PenggunaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::view('/template', 'index');
+
+Route::controller(PenggunaController::class)->group(function(){
+    Route::get('/masuk', 'masuk');
+    Route::post('/masuk', 'doMasuk');
+    Route::post('/keluar', 'doKeluar');
 });
