@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -169,6 +170,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\LayananPenggunaProvider::class,
+        App\Providers\LayananTodolistProvider::class,
     ])->toArray(),
 
     /*
