@@ -12,12 +12,8 @@
 <body>
 <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="row">
-        <div class="alert alert-danger" role="alert">
-            A simple primary alert—check it out!
-        </div>
-    </div>
-    <div class="row">
-        <form method="post" action="/logout">
+        <form method="post" action="/keluar">
+            @csrf
             <button class="w-15 btn btn-lg btn-danger" type="submit">Sign Out</button>
         </form>
     </div>

@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Middleware\HanyaBelumLogin;
+use App\Http\Middleware\HanyaSudahLogin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,14 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::view('/template', 'index');
+Route::view('/template', 'template');
+
+Route::get('/', [HomeController::class, 'home']);
 
 Route::controller(PenggunaController::class)->group(function(){
-    Route::get('/masuk', 'masuk');
-    Route::post('/masuk', 'doMasuk');
+    Route::get('/masuk', 'masuk')->middleware(HanyaBelumLogin::class);
+    Route::post('/masuk', 'doMasuk')->middleware(HanyaBelumLogin::class);
     Route::post('/keluar', 'doKeluar');
 });

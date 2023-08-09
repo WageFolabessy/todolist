@@ -14,12 +14,25 @@ class PenggunaControllerTest extends TestCase
         $response->assertSeeText('Login');
     }
 
+    public function testHanyaYangSudahLogin()
+    {
+        $this->withSession(['user' => 'richo'])->get('/masuk')->assertRedirect('/');
+    }
+    
+
     public function testLoginBerhasil()
     {
         $this->post('/masuk', [
             'user' => 'richo',
             'password' => '123'
         ])->assertRedirect('/')->assertSessionHas('user', 'richo');
+    }
+    public function testSudahLoginBerhasil()
+    {
+        $this->withSession(['user' => 'richo'])->post('/masuk', [
+            'user' => 'richo',
+            'password' => '123'
+        ])->assertRedirect('/');
     }
 
     public function testLoginValidasiEror()
@@ -33,5 +46,15 @@ class PenggunaControllerTest extends TestCase
             'user' => '1234',
             'password' => '1234'
         ])->assertSeeText('User atau Password salah');
+    }
+
+    public function testLogout()
+    {
+        $this->withSession(['user' => 'richo'])->post('/keluar')->assertRedirect('/masuk')->assertSessionMissing('user');
+    }
+
+    public function testLogoutBelumLogin()
+    {
+        $this->post('/keluar')->assertRedirect('/masuk');
     }
 }

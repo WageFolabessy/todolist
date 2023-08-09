@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\LayananPengguna;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -22,7 +23,7 @@ class PenggunaController extends Controller
         ]);
     }
     
-    public function doMasuk(Request $request)
+    public function doMasuk(Request $request): View | RedirectResponse
     {
         $user = $request->input('user');
         $password = $request->input('password');
@@ -38,7 +39,7 @@ class PenggunaController extends Controller
         if($this->layananPengguna->login($user, $password))
         {
             $request->session()->put('user', $user);
-            return redirect('todo');
+            return redirect('/');
         }
 
         return view('user.masuk', [
@@ -47,8 +48,9 @@ class PenggunaController extends Controller
         ]);
     }
 
-    public function doKeluar()
+    public function doKeluar(Request $request): RedirectResponse
     {
-
+        $request->session()->forget('user');
+        return redirect('/masuk');
     }
 }
